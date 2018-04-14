@@ -6,6 +6,7 @@ import ComplexCards from '../UI/Cards/ComplexCards';
 const Characters = (props) => {
     return (
         <div>
+            {console.log(props.characters, "char")}
             {Object.keys(props.characters)
                 .map((k,index) => {
                     // return <li key={index}>{props.characters[k].name}</li>
