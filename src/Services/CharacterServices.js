@@ -3,9 +3,9 @@ import firebase from 'firebase';
 
 export class CharacterService {
 
-    static async getCharacters() {
+    static getCharacters() {
         const characterRef = firebase.database().ref('campaigns/Player1/characters');
-         return await characterRef.once('value')
+         return characterRef.once('value')
                 .then((snapshot) => {
                    return snapshot.val();
                    
@@ -17,7 +17,8 @@ export class CharacterService {
     }
 
     static async addCharacter(character) {
-        return await firebase.database().ref('campaigns/Player1/characters/').push({
+        const charRef = firebase.database().ref('campaigns/Player1/characters/')
+        return charRef.push({
             name: character.name,
             class: character.charClass,
             experience: character.experience,
@@ -28,11 +29,13 @@ export class CharacterService {
         })
     }
 
-    static async deleteCharacter(character) {
+    static deleteCharacter(characterKey) {
         const characterRef = firebase.database().ref('campaigns/Player1/characters');
-        return await characterRef.on("child_removed", function(snapshot) {
-            let deletedCharacter = snapshot.val();
-            console.log("The character titles "+ deletedCharacter.name + " has been deleted");
+        return characterRef.child(characterKey).remove().then((res) =>
+            console.log('Successfully deleted ' + res)
+        )
+        .catch((err) => {
+            console.log(err)
         })
     }
 }

@@ -4,9 +4,8 @@ import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import Paper from 'material-ui/Paper';
 
-import Form from './CharacterForm';
+import CharacterForm from './CharacterForm';
 import ComplexCards from '../UI/Cards/ComplexCards';
 
 
@@ -26,6 +25,7 @@ class Characters extends Component {
     const { classes } = this.props;
         return (
             <div className={classes.root}>
+            <CharacterForm />
             <Grid container spacing={24}>
                 
                     {Object.keys(this.props.characters)
@@ -34,7 +34,7 @@ class Characters extends Component {
                                         return <Grid item xs={6} sm={3} key={index}> <ComplexCards name = {this.props.characters[k].name}
                                         charClass={this.props.characters[k].class}
                                         level={this.props.characters[k].level} 
-                                        
+                                        displayMe={k}
                                         />
                                         </Grid>
                                     })

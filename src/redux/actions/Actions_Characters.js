@@ -2,18 +2,27 @@ import { CharacterService } from '../../Services/CharacterServices';
 
 
 export const addCharacter = character => async dispatch => {
-    await CharacterService.addCharacter(character);
-    dispatch({ type: "ADD_CHARACTER", character: character })
+    await CharacterService.addCharacter(character)
+    .then((snapshot) => {
+        var charKey = snapshot.key;
+        dispatch({ type: "ADD_CHARACTER", character: {[charKey] : character} })
+    })
+    .catch((err) => {
+            console.log(err)
+    });  
 }
-export const getCharacters = () => async dispatch => {
-    const characters = await CharacterService.getCharacters();
-    console.log(characters);
-        Object.keys(characters).map((k, v) => {
-            dispatch({ type: "FETCH_CHARACTERS", characters: characters[k] })
-        }
-    )
+export const getCharacters = () => dispatch => {
+    const characters = CharacterService.getCharacters();
+    characters.then((res) => {
+        console.log(res)
+        dispatch({ type: "FETCH_CHARACTERS", characters: res})
+    })
+    .catch((err) => {
+        console.log(err);
+    })
 }
 
-export const deleteCharacters = character => async dispatch => {
-    const character = await CharacterService
+export const deleteCharacter = character => async dispatch => {
+    await CharacterService.deleteCharacter(character);
+    dispatch({ type: "DELETE_CHARACTER", character: character})
 }

@@ -8,7 +8,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-class ConnectedForm extends Component {
+class CharacterForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -54,5 +54,5 @@ class ConnectedForm extends Component {
     );
   }
 }
-const Form = connect(null, mapDispatchToProps)(ConnectedForm);
+const Form = connect(null, mapDispatchToProps)(CharacterForm);
 export default Form;

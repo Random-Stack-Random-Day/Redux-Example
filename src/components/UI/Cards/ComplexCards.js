@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import classnames from 'classnames';
+import { compose } from 'redux';
 import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
 import Collapse from 'material-ui/transitions/Collapse';
 import Avatar from 'material-ui/Avatar';
@@ -14,6 +15,8 @@ import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 
 import classImage from '../../../assets/images/mindthief.jpg'
+import { deleteCharacter } from '../../../redux/actions'
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   card: {
@@ -43,6 +46,10 @@ const styles = theme => ({
 class ComplexCard extends React.Component {
   state = { expanded: false };
 
+  removeCharacter = (character) => {
+    this.props.deleteCharacter(character);
+  }
+
   handleExpandClick = () => {
     this.setState({ expanded: !this.state.expanded });
   };
@@ -61,7 +68,7 @@ class ComplexCard extends React.Component {
             }
             action={
               <IconButton>
-                <MoreVertIcon />
+                <MoreVertIcon onClick={() => this.removeCharacter(this.props.displayMe)}/>
               </IconButton>
             }
             title={this.props.name + ' the ' + this.props.charClass}
@@ -74,7 +81,7 @@ class ComplexCard extends React.Component {
           />
           <CardContent>
             <Typography component="p">
-              Some text
+              {this.props.displayMe}
             </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
@@ -133,5 +140,10 @@ class ComplexCard extends React.Component {
 ComplexCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteCharacter: character => dispatch(deleteCharacter(character))
+  };
+};
 
-export default withStyles(styles)(ComplexCard);
+export default compose(connect(null, mapDispatchToProps), withStyles(styles))(ComplexCard);
