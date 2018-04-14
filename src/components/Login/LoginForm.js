@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Input from '../UI/Input/Input';
+import InputFields from '../UI/Input/InputFields';
 import Button from '../UI/Button/RaisedButton';
 import Util from '../../util/Util';
 import firebase from 'firebase';
@@ -36,7 +36,7 @@ class LoginForm extends Component {
             <React.Fragment>
                 <ErrorLabel error={errors.register} color='#D50000' />
                 <form style={this.props.style} className="register-form" onSubmit={handleSubmit}>
-                    <Input
+                    <InputFields
                         label="Email"
                         type="email"
                         name="email"
@@ -47,7 +47,7 @@ class LoginForm extends Component {
                         error={touched.email && errors.email}
                     />
 
-                    <Input
+                    <InputFields
                         label="Password"
                         type="password"
                         name="password"

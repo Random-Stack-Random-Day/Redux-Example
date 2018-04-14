@@ -3,9 +3,13 @@ import AppBar from '../UI/AppBar/AppBar';
 import { connect } from 'react-redux';
 import Characters from '../Characters/Characters';
 
+const divStyle = {
+    maxWidth: '100%'
+};
+
 const Layout = (props) => {
     return (
-        <div>
+        <div stlye={divStyle}>
             <AppBar {...props} />
             <Characters />
         </div>

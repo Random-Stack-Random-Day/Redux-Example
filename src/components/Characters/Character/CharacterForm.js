@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addCharacter } from "../../redux/actions";
+import { addCharacter } from "../../../redux/actions";
+import InputFields from '../../UI/Input/InputFields';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -27,6 +28,7 @@ class CharacterForm extends Component {
   handleChange(event) {
     this.setState({ [event.target.id]: event.target.value });
   }
+
   handleSubmit(event) {
     event.preventDefault();
     const { name, charClass, experience, level, gold, perks, checkmarks } = this.state;
@@ -34,18 +36,15 @@ class CharacterForm extends Component {
     this.setState({ name: "" });
   }
   render() {
-    const { name } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">name</label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            value={name}
-            onChange={this.handleChange}
-          />
+          <InputFields 
+              fieldtype='required' 
+              id="name"
+              placeholder="Cool name"
+              label="Some Kewl Name"
+            />
         </div>
         <button type="submit" className="btn btn-success btn-lg">
           SAVE

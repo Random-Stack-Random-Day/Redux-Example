@@ -5,7 +5,7 @@ import Grid from 'material-ui/Grid';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import CharacterForm from './CharacterForm';
+import CharacterForm from './Character/CharacterForm';
 import ComplexCards from '../UI/Cards/ComplexCards';
 
 
@@ -35,6 +35,7 @@ class Characters extends Component {
                                         charClass={this.props.characters[k].class}
                                         level={this.props.characters[k].level} 
                                         displayMe={k}
+                                        perkProgress={this.props.characters[k].checkmarks}
                                         />
                                         </Grid>
                                     })

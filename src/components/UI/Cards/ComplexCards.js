@@ -13,10 +13,15 @@ import FavoriteIcon from 'material-ui-icons/Favorite';
 import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
+import CheckCircle from '@material-ui/icons/CheckCircle';
+import * as R from 'ramda';
+import * as uid from 'uuid/v4';
+
 
 import classImage from '../../../assets/images/mindthief.jpg'
 import { deleteCharacter } from '../../../redux/actions'
 import { connect } from 'react-redux';
+import { Menu, MenuItem } from 'material-ui';
 
 const styles = theme => ({
   card: {
@@ -44,7 +49,10 @@ const styles = theme => ({
 });
 
 class ComplexCard extends React.Component {
-  state = { expanded: false };
+  state = { 
+    expanded: false,
+    anchorEl: null, 
+  };
 
   removeCharacter = (character) => {
     this.props.deleteCharacter(character);
@@ -54,21 +62,44 @@ class ComplexCard extends React.Component {
     this.setState({ expanded: !this.state.expanded });
   };
 
-  render() {
-    const { classes } = this.props;
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
 
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  render() {
+    const { anchorEl } = this.state;
+    const { classes } = this.props;
     return (
+      
       <div>
         <Card className={classes.card}>
           <CardHeader
             avatar={
               <Avatar aria-label="Recipe" className={classes.avatar}>
-                {this.props.name.charAt(0)}
+                {this.props.name.charAt(0).toUpperCase()}
               </Avatar>
             }
             action={
               <IconButton>
-                <MoreVertIcon onClick={() => this.removeCharacter(this.props.displayMe)}/>
+                <MoreVertIcon 
+                  aria-owns={anchorEl ? 'character-menu' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleClick}
+                />
+                {/* <MoreVertIcon onClick={}/> */}
+                <Menu
+                  id="character-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={() => this.removeCharacter(this.props.displayMe)}>Delete This Character</MenuItem>
+                </Menu>
               </IconButton>
             }
             title={this.props.name + ' the ' + this.props.charClass}
@@ -81,7 +112,8 @@ class ComplexCard extends React.Component {
           />
           <CardContent>
             <Typography component="p">
-              {this.props.displayMe}
+            {R.range(0, this.props.perkProgress).map(() => <CheckCircle key={uid()} /> )}
+            
             </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
