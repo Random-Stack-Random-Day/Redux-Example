@@ -3,8 +3,7 @@ import { CharacterService } from '../../Services/CharacterServices';
 
 export const addCharacter = character => async dispatch => {
     const characterCall = await CharacterService.addCharacter(character);
-    console.log(characterCall);
-    // dispatch({ type: "ADD_CHARACTER", character: character })
+    dispatch({ type: "ADD_CHARACTER", character: character })
 }
 
 export const getCharacters = () => async dispatch => {

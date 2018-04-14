@@ -5,7 +5,6 @@ export class CharacterService {
     static async getCharacters() {
          return await firebase.database().ref('campaigns/Player1/characters').once('value')
                 .then((snapshot) => {
-                    console.log(snapshot.val());
                    return snapshot.val();
                    
                 })
@@ -24,12 +23,6 @@ export class CharacterService {
             gold: character.gold,
             perks: character.perks,
             checkmarks: character.checkmarks
-        })
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((err) => {
-                console.log(err)
         })
     }
 }
