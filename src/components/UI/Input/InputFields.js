@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
+import MenuItem from 'material-ui/Menu/MenuItem';
 
 
 const styles = theme => ({
@@ -20,6 +21,7 @@ const styles = theme => ({
 });
 
 
+
 class InputFields extends React.Component {
   state = {
   };
@@ -35,42 +37,82 @@ class InputFields extends React.Component {
   }
 
   render() {
+    const charClasses = [
+      {
+        value: "Mindthief",
+        label: "MND"
+      },
+      {
+        value: "Tinkerer",
+        label: "TKR"
+      }
+    ];
+
     const { classes } = this.props;
-    let inputType = null;
     switch (this.props.fieldtype) {
         case ("name"):
-            inputType = <TextField
-                    id="name"
+            return <TextField
+                    id={this.props.setid}
                     className={classes.textField}
                     placeholder={this.props.placeholder}
-                    onChange={this.handleChange('name')}
                     margin="normal"
+                    type="text"
+                    value={this.props.value}
+                    onChange={this.props.onchange}
                 />
-            break;
         case ("required"):
-        inputType = <TextField
+        return <TextField
                 required
-                id="required"
+                id={this.props.setid}
                 placeholder={this.props.placeholder}
                 className={classes.textField}
                 margin="normal"
             />
-            break;
         case ("password"):
-        inputType = <TextField
-                id="password-input"
+        return <TextField
+                id={this.props.setid}
                 label={this.props.label}
                 className={classes.textField}
                 type="password"
                 autoComplete="current-password"
                 margin="normal"
             />  
-            break;
+      case ("number"):
+      return <TextField
+                    id={this.props.setid}
+                    label={this.props.label}
+                    value={this.props.value}
+                    onChange={this.props.onchange}
+                    type="number"
+                    inputProps={{ maxLength: 10}}
+                    className={classes.textField}
+                  />
+      case ("select"):
+      return <TextField
+                  id={this.props.setid}
+                  select
+                  className={classes.textField}
+                  value={this.props.value}
+                  onChange={this.props.onchange}
+                  SelectProps={{
+                    MenuProps: {
+                      className: classes.menu,
+                    },
+                  }}
+                  helperText="Please select your class"
+                  margin="normal"
+            >
+              {charClasses.map(option => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+
+
         default:
-            inputType =<div></div>
-            break;
+            return <div></div>
     }
-    return inputType;
   }
 }
 

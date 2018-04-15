@@ -20,12 +20,13 @@ export class CharacterService {
         const charRef = firebase.database().ref('campaigns/Player1/characters/')
         return charRef.push({
             name: character.name,
-            class: character.charClass,
+            charClass: character.charClass,
             experience: character.experience,
             level: character.level,
             gold: character.gold,
             perks: character.perks,
-            checkmarks: character.checkmarks
+            checkmarks: character.checkmarks,
+            description: character.description
         })
     }
 

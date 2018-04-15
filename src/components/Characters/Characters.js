@@ -5,8 +5,8 @@ import Grid from 'material-ui/Grid';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import CharacterForm from './Character/CharacterForm';
 import ComplexCards from '../UI/Cards/ComplexCards';
+import CreateCharacterModal from './Character/CreateCharacterModal';
 
 
 const styles = theme => ({
@@ -25,14 +25,14 @@ class Characters extends Component {
     const { classes } = this.props;
         return (
             <div className={classes.root}>
-            <CharacterForm />
+            <CreateCharacterModal />
             <Grid container spacing={24}>
                 
                     {Object.keys(this.props.characters)
                                     .map((k,index) => {
                                         // return <li key={index}>{props.characters[k].name}</li>
                                         return <Grid item xs={6} sm={3} key={index}> <ComplexCards name = {this.props.characters[k].name}
-                                        charClass={this.props.characters[k].class}
+                                        charClass={this.props.characters[k].charClass}
                                         level={this.props.characters[k].level} 
                                         displayMe={k}
                                         perkProgress={this.props.characters[k].checkmarks}

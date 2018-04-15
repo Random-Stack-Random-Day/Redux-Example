@@ -66,8 +66,9 @@ class ComplexCard extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = () => {
+  onDeleteHandler = (deleteId) => {
     this.setState({ anchorEl: null });
+    this.removeCharacter(deleteId); 
   };
 
   render() {
@@ -98,7 +99,7 @@ class ComplexCard extends React.Component {
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={() => this.removeCharacter(this.props.displayMe)}>Delete This Character</MenuItem>
+                  <MenuItem onClick={() => this.onDeleteHandler(this.props.displayMe)}>Delete This Character</MenuItem>
                 </Menu>
               </IconButton>
             }
