@@ -32,10 +32,6 @@ class InputFields extends React.Component {
     });
   };
 
-  componentDidMount() {
-    console.log(this.props.fieldtype)
-  }
-
   render() {
     const charClasses = [
       {
@@ -84,7 +80,24 @@ class InputFields extends React.Component {
                     value={this.props.value}
                     onChange={this.props.onchange}
                     type="number"
-                    inputProps={{ maxLength: 10}}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    className={classes.textField}
+                    onBlur={this.props.onblur ? this.props.onblur : null}
+                  />
+      case ("number-restriction"):
+      return <TextField
+                    id={this.props.setid}
+                    label={this.props.label}
+                    value={this.props.value}
+                    onChange={this.props.onchange}
+                    type="number"
+                    InputProps={
+                      {inputProps: {
+                        min: this.props.min, max: this.props.max
+                      }}
+                    }
                     className={classes.textField}
                   />
       case ("select"):

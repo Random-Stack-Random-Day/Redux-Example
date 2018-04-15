@@ -29,15 +29,25 @@ class CharacterForm extends Component {
   }
 
 handleChange(event) {
-  this.setState({ 
-    [event.target.id]: event.target.type === 'number' ? parseInt(event.target.value, 10) : event.target.value
-  });
+  // (event.target.id === 'experience' ? console.log("Hi") : null);
+  if (event.target.value !== '' || event.target.value > 0){
+    this.setState({ 
+      [event.target.id]: event.target.type === 'number' ? parseInt(event.target.value, 10) : event.target.value
+    });
+  }
+}
+
+handleBlur = (event) => {
+  if (event.target.id === 'experience') {
+    // console.log(CharacterBuilder.getLevelFromExp(event.target.value))
+    this.setState({ level: CharacterBuilder.getLevelFromExp(event.target.value) }) 
+   }
 }
 
 updateDescription = (event) => {
-  const charDescription = CharacterBuilder.fillInProfile('Mindthief');
+  const charDescription = CharacterBuilder.fillInProfile(event.target.value);
   console.log(charDescription.description);
-  this.setState({ description : charDescription, charClass: event.target.value });
+  this.setState({ description : charDescription.description, charClass: event.target.value });
 }
 
 handleSubmit(event) {
@@ -45,7 +55,7 @@ handleSubmit(event) {
   const { name, charClass, experience, level, gold, perks, checkmarks, description } = this.state;
   this.props.addCharacter({ name, charClass, experience, level, gold, perks, checkmarks, description });
   this.setState({ name: "",
-  charClass: "Tinkerer",
+  charClass: "",
   experience: 0,
   level: 0,
   gold: 0,
@@ -57,8 +67,8 @@ handleSubmit(event) {
 render() {
     const { name, charClass, experience, level, gold, perks, checkmarks } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-      <button onClick={() => this.testLogger}>Test Me </button>
+      <form onSubmit={this.validateSubmit}>
+      {this.state.description ? this.state.description : null}
         <div className="form-group">
           <InputFields 
               fieldtype='name' 
@@ -81,7 +91,9 @@ render() {
               setid={"experience"}
               value={experience}
               label="Experience"
+              placeholder={0}
               onchange={this.handleChange}
+              onblur={this.handleBlur}
             />
             <InputFields 
               fieldtype='number' 
@@ -105,11 +117,13 @@ render() {
               onchange={this.handleChange}
             />
             <InputFields 
-              fieldtype='number' 
+              fieldtype='number-restriction' 
               setid={"checkmarks"}
               value={checkmarks}
               label="Perk Progress"
               onchange={this.handleChange}
+              min="0"
+              max="18"
             />
         </div>
         <button type="submit" className="btn btn-success btn-lg">
