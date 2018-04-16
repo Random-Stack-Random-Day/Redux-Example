@@ -53,6 +53,7 @@ class InputFields extends React.Component {
                     placeholder={this.props.placeholder}
                     margin="normal"
                     type="text"
+                    name={this.props.name}
                     value={this.props.value}
                     onChange={this.props.onchange}
                 />

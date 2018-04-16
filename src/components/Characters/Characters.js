@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import ComplexCards from '../UI/Cards/ComplexCards';
 import CreateCharacterModal from './Character/CreateCharacterModal';
-
+import NewModal from './Character/NEW_CreateCharacterModal';
 
 const styles = theme => ({
   root: {
@@ -25,9 +25,9 @@ class Characters extends Component {
     const { classes } = this.props;
         return (
             <div className={classes.root}>
+            <NewModal />
             <CreateCharacterModal />
             <Grid container spacing={24}>
-                
                     {Object.keys(this.props.characters)
                                     .map((k,index) => {
                                         // return <li key={index}>{props.characters[k].name}</li>

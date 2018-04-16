@@ -14,6 +14,8 @@ import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import CheckCircle from '@material-ui/icons/CheckCircle';
+import CheckBoxOutline from '@material-ui/icons/CheckBoxOutlineBlank';
+import DoneAll from '@material-ui/icons/DoneAll';
 import * as R from 'ramda';
 import * as uid from 'uuid/v4';
 
@@ -74,6 +76,15 @@ class ComplexCard extends React.Component {
   render() {
     const { anchorEl } = this.state;
     const { classes } = this.props;
+    const separateEvery = (sep, n, xs) => R.unnest(R.intersperse([sep], R.splitEvery(n, xs)))
+
+    const genElements = (totalSize, progress) => separateEvery(<DoneAll/>, 3, 
+                        R.concat(
+                          R.range(0, progress).map(() => <CheckCircle key={uid()} /> ), 
+                          R.range(progress, 18).map(() => <CheckBoxOutline key={uid()} />)
+                        )
+              )
+
     return (
       
       <div>
@@ -113,8 +124,7 @@ class ComplexCard extends React.Component {
           />
           <CardContent>
             <Typography component="p">
-            {R.range(0, this.props.perkProgress).map(() => <CheckCircle key={uid()} /> )}
-            
+            {genElements(18, this.props.perkProgress)}
             </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
