@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
+import Input from 'material-ui/Input';
 import MenuItem from 'material-ui/Menu/MenuItem';
 
 
@@ -107,6 +108,15 @@ class InputFields extends React.Component {
                     }
                     className={classes.textField}
                   />
+      case ("disabled"):
+      return <Input 
+                id={this.props.setid} 
+                value={this.props.value} 
+                onChange={this.props.onChange}
+                onBlur={this.props.onBlur}
+                name={this.props.name}
+                />
+
       case ("select"):
       return <TextField
                   id={this.props.setid}

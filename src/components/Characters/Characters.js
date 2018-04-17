@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import CharacterCards from './CharacterCards';
 import CreateCharacterModal from './Character/CreateCharacter/CreateCharacterModal';
 import NewModal from './Character/EditCharacter/NEW_CreateCharacterModal';
+import NEWCard from './NEW_CharacterCards'
 
 const styles = theme => ({
   root: {
@@ -21,23 +22,31 @@ const styles = theme => ({
 });
 
 class Characters extends Component {
+
+  doubleClickHandler = (character) => {
+    console.log("Double Click Initiated", character)
+  }
   render() {
     const { classes } = this.props;
         return (
             <div className={classes.root}>
 
             {/* <NewModal /> */}
+            {/* <NEWCard /> */}
             <CreateCharacterModal />
             <Grid container spacing={24}>
                     {Object.keys(this.props.characters)
                                     .map((k,index) => {
                                         // return <li key={index}>{props.characters[k].name}</li>
-                                        return <Grid item xs={6} sm={3} key={index}> <CharacterCards name = {this.props.characters[k].name}
-                                        charClass={this.props.characters[k].charClass}
-                                        level={this.props.characters[k].level} 
+                                        return <Grid item xs={6} sm={3} key={index}> <NEWCard 
+                                        character={this.props.characters[k]}
+                                        // name = {this.props.characters[k].name}
+                                        // charClass={this.props.characters[k].charClass}
+                                        // level={this.props.characters[k].level} 
                                         displayMe={k}
-                                        perkProgress={this.props.characters[k].checkmarks}
-                                        experience={this.props.characters[k].experience}
+                                        // perkProgress={this.props.characters[k].checkmarks}
+                                        // experience={this.props.characters[k].experience}
+                                        onDoubleClick={(character) => this.doubleClickHandler(character)}
                                         />
                                         </Grid>
                                     })

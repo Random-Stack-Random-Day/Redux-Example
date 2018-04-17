@@ -25,6 +25,7 @@ import { deleteCharacter } from '../../redux/actions';
 import { connect } from 'react-redux';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import EditCharacterModal from './Character/EditCharacter/EditCharacterModal';
+import cssClasses from './CharCard.css';
 
 
 
@@ -60,7 +61,7 @@ class ComplexCard extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.props)
+    console.log(this.props.character, 'Cards')
   }
   
 
@@ -107,11 +108,11 @@ class ComplexCard extends React.Component {
     return (
       
       <div>
-        <Card className={classes.card}>
+        <Card className={cssClasses.card} onDoubleClick={() => this.props.onDoubleClick(this.props.character)}>
           <CardHeader
             avatar={
               <Avatar aria-label="Recipe" className={classes.avatar}>
-                {this.props.name.charAt(0).toUpperCase()}
+                {this.props.character.name.charAt(0).toUpperCase()}
               </Avatar>
             }
             action={
@@ -124,8 +125,8 @@ class ComplexCard extends React.Component {
               </IconButton>
             }
             
-            title={this.props.name + ' the ' + this.props.charClass}
-            subheader={this.props.level}
+            title={this.props.character.name + ' the ' + this.props.character.charClass}
+            subheader={this.props.character.level}
           />
           <Menu
             id="character-menu"
@@ -134,7 +135,7 @@ class ComplexCard extends React.Component {
             onClose={this.handleClose}
           >
             <MenuItem>Log Game </MenuItem>
-            <EditCharacterModal character={this.props} closeMenuHandler={this.onEditHandler}/>
+            <EditCharacterModal character={this.props.character} closeMenuHandler={this.onEditHandler}/>
             <MenuItem onClick={() => this.onDeleteHandler(this.props.displayMe)}>Delete This Character</MenuItem>
           </Menu> 
           <CardMedia
@@ -144,7 +145,7 @@ class ComplexCard extends React.Component {
           />
           <CardContent>
             <Typography component="p">
-            {genElements(18, this.props.perkProgress)}
+            {genElements(18, this.props.character.checkmarks)}
             <DoneAll/>
             </Typography>
           </CardContent>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@kennethormandy/react-flipcard": "^0.4.0",
     "@material-ui/icons": "^1.0.0-beta.42",
     "axios": "^0.18.0",
     "firebase": "^4.12.1",
@@ -11,6 +12,7 @@
     "material-ui-icons": "^1.0.0-beta.36",
     "ramda": "^0.25.0",
     "react": "^16.3.1",
+    "react-card-flippable": "^1.1.5",
     "react-dom": "^16.3.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",

@@ -1,28 +1,19 @@
 import React, {Component} from 'react';
 import InputFields from '../../../UI/Input/InputFields';
+import { FormControl } from 'material-ui/Form';
 import {withFormik} from 'formik';
 import Yup from 'yup';
 import uuid from 'uuid/v4';
 
 class NEW_CharacterEditForm extends Component {
-    constructor() {
-        super();
-        this.state = {
-            name: "",
-            charClass: "",
-            experience: 0,
-            level: 0,
-            gold: 0,
-            perks: 0,
-            checkmarks: 0,
-            description: ""
-        };
+    
+    componentDidMount() {
+        console.log(this.props.character)
     }
 
-componentDidMount() {
-    console.log(this.props.character)
-}
-
+    handleDoubleClick = () => {
+        console.log("Double click active")
+    }
 
     render() {
         const {
@@ -43,22 +34,40 @@ componentDidMount() {
                         fieldtype="name"
                         name="name"
                         value={values.name}
-                        setid={values.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={touched.name && errors.name}/> 
+                        error={touched.name && errors.name}
+                    /> 
                         {errors.name && touched.name && <div className="input-feedback">{errors.name}</div>}
                     <InputFields
                         label="Experience"
-                        fieldtype="number-restriction"
+                        fieldtype="number"
                         name="experience"
                         value={values.experience}
-                        setid={uuid()}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={touched.experience && errors.experience}
                     /> 
-                        {errors.experience && touched.experience && <div className="input-feedback">{errors.experience}</div>}
+                    <FormControl disabled>
+                        <InputFields
+                            label="Chararcter Class"
+                            fieldtype="disabled"
+                            name="charClass"
+                            value={values.charClass}
+                            setid={"charClass-disabled"}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        />
+                    </FormControl>
+                    <InputFields
+                        label="Gold"
+                        fieldtype="number"
+                        name="gold"
+                        value={values.gold}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    />
+                        {errors.gold && touched.gold && <div className="input-feedback">{errors.gold}</div>}
                     <button type="submit">Submit</button>
                 </form>
             </div>
@@ -68,7 +77,16 @@ componentDidMount() {
 };
 
 export default withFormik({
-    mapPropsToValues: props => ({name: props.character.name, experience: props.character.experience}),
+    mapPropsToValues: props => ({
+        name: props.character.name, 
+        experience: props.character.experience,
+        charClass: props.character.charClass,
+        level: props.character.level,
+        gold: props.character.gold,
+        perks: props.character.perks,
+        checkmarks: props.character.perkProgress
+
+    }),
 
     validationSchema: Yup
         .object()
@@ -76,7 +94,8 @@ export default withFormik({
             name: Yup
                 .string()
                 .required(`Don't you want a name bro?`),
-            experience: Yup.number().required(`Even a 0 is a number`).min(0, `Can only go up from here`).max(500, `Bro, enough already. RETIRE ALREADY!`)
+            experience: Yup.number().required(`Even a 0 is a number`).min(0, `Can only go up from here`).max(500, `Bro, enough already. RETIRE ALREADY!`),
+            gold: Yup.number().required(`You're broke, sure, but 0 is still a number`).min(0, `You're broke, sure, but 0 is still a number`)
         }),
 
     handleSubmit: (values, {props, setSubmitting, setErrors}) => {
