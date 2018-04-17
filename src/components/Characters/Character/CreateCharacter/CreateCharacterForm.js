@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {addCharacter} from "../../../redux/actions";
-import InputFields from '../../UI/Input/InputFields';
-import CharacterBuilder from './CharacterBuilder';
+import {addCharacter} from "../../../../redux/actions";
+import InputFields from '../../../UI/Input/InputFields';
+import CharacterBuilder from '../CharacterBuilder';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -30,7 +30,7 @@ class CharacterForm extends Component {
     this.handleSubmit = this
       .handleSubmit
       .bind(this);
-  }
+  }  
 
   handleChange(event) {
     // (event.target.id === 'experience' ? console.log("Hi") : null);
@@ -117,46 +117,46 @@ class CharacterForm extends Component {
             value={name}
             placeholder="Cool name"
             label="Some Kewl Name"
-            onchange={this.handleChange}/>
+            onChange={this.handleChange}/>
           <InputFields
             fieldtype='select'
             setid={"charClass"}
             value={charClass}
             placeholder="Character Class"
             label="Character Class"
-            onchange={this.updateDescription}/>
+            onChange={this.updateDescription}/>
           <InputFields
             fieldtype='number'
             setid={"experience"}
             value={experience}
             label="Experience"
             placeholder={0}
-            onchange={this.handleChange}
-            onblur={this.handleBlur}/>
+            onChange={this.handleChange}
+            onBlur={this.handleBlur}/>
           <InputFields
             fieldtype='number'
             setid={"level"}
             value={level}
             label="Current Level"
-            onchange={this.handleChange}/>
+            onChange={this.handleChange}/>
           <InputFields
             fieldtype='number'
             setid={"gold"}
             value={gold}
             label="Gold"
-            onchange={this.handleChange}/>
+            onChange={this.handleChange}/>
           <InputFields
             fieldtype='number'
             setid={"perks"}
             value={perks}
             label="Perks"
-            onchange={this.handleChange}/>
+            onChange={this.handleChange}/>
           <InputFields
             fieldtype='number-restriction'
             setid={"checkmarks"}
             value={checkmarks}
             label="Perk Progress"
-            onchange={this.handleChange}
+            onChange={this.handleChange}
             min="0"
             max="18"/>
         </div>

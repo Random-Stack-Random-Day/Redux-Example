@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Modal from 'material-ui/Modal';
 import Button from 'material-ui/Button';
-import CharacterForm from './CharacterForm';
+import Testform from './EditCharacterForm';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -31,7 +31,7 @@ const styles = theme => ({
   },
 });
 
-class CreateCharacterModal extends React.Component {
+class EditCharacterPortal extends React.Component {
   state = {
     open: false,
   };
@@ -50,7 +50,7 @@ class CreateCharacterModal extends React.Component {
     return (
       <div>
         <Typography gutterBottom>Let's go on an adventure!</Typography>
-        <Button onClick={this.handleOpen}>Create Character</Button>
+        <Button onClick={this.handleOpen}>TEST NEW MODAL</Button>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
@@ -58,7 +58,7 @@ class CreateCharacterModal extends React.Component {
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
-            <CharacterForm closeIt={this.handleClose}/>
+            <Testform closeIt={this.handleClose}/>
           </div>
         </Modal>
       </div>
@@ -66,11 +66,11 @@ class CreateCharacterModal extends React.Component {
   }
 }
 
-CreateCharacterModal.propTypes = {
+EditCharacterPortal.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 // We need an intermediary variable for handling the recursive nesting.
-const CreateCharacterModalWrapped = withStyles(styles)(CreateCharacterModal);
+const EditCharacterPortalWrapped = withStyles(styles)(EditCharacterPortal);
 
-export default CreateCharacterModalWrapped;
+export default EditCharacterPortalWrapped;

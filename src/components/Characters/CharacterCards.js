@@ -20,10 +20,13 @@ import * as R from 'ramda';
 import * as uid from 'uuid/v4';
 
 
-import classImage from '../../../assets/images/mindthief.jpg'
-import { deleteCharacter } from '../../../redux/actions'
+import classImage from '../../assets/images/mindthief.jpg';
+import { deleteCharacter } from '../../redux/actions';
 import { connect } from 'react-redux';
-import { Menu, MenuItem } from 'material-ui';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import EditCharacterModal from './Character/EditCharacter/EditCharacterModal';
+
+
 
 const styles = theme => ({
   card: {
@@ -53,8 +56,22 @@ const styles = theme => ({
 class ComplexCard extends React.Component {
   state = { 
     expanded: false,
-    anchorEl: null, 
+    anchorEl: null
   };
+
+  componentDidMount() {
+    console.log(this.props)
+  }
+  
+
+  handleMenu = (event) => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
 
   removeCharacter = (character) => {
     this.props.deleteCharacter(character);
@@ -64,27 +81,29 @@ class ComplexCard extends React.Component {
     this.setState({ expanded: !this.state.expanded });
   };
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
   onDeleteHandler = (deleteId) => {
     this.setState({ anchorEl: null });
     this.removeCharacter(deleteId); 
   };
 
+  onEditHandler = () => {
+    console.log("Closed");
+    this.setState({ anchorEl: null });
+    // console.log(character)
+  }
+
   render() {
     const { anchorEl } = this.state;
     const { classes } = this.props;
+    const open = Boolean(anchorEl);
     const separateEvery = (sep, n, xs) => R.unnest(R.intersperse([sep], R.splitEvery(n, xs)))
 
-    const genElements = (totalSize, progress) => separateEvery(<DoneAll/>, 3, 
+    const genElements = (totalSize, progress) => separateEvery(<DoneAll />, 3, 
                         R.concat(
                           R.range(0, progress).map(() => <CheckCircle key={uid()} /> ), 
                           R.range(progress, 18).map(() => <CheckBoxOutline key={uid()} />)
                         )
-              )
-
+              )               
     return (
       
       <div>
@@ -96,27 +115,28 @@ class ComplexCard extends React.Component {
               </Avatar>
             }
             action={
-              <IconButton>
-                <MoreVertIcon 
+              <IconButton
                   aria-owns={anchorEl ? 'character-menu' : null}
                   aria-haspopup="true"
-                  onClick={this.handleClick}
-                />
-                {/* <MoreVertIcon onClick={}/> */}
-                <Menu
-                  id="character-menu"
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={() => this.onDeleteHandler(this.props.displayMe)}>Delete This Character</MenuItem>
-                </Menu>
+                  onClick={this.handleMenu}
+              >
+                <MoreVertIcon />
               </IconButton>
             }
+            
             title={this.props.name + ' the ' + this.props.charClass}
             subheader={this.props.level}
           />
+          <Menu
+            id="character-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={this.handleClose}
+          >
+            <MenuItem>Log Game </MenuItem>
+            <EditCharacterModal character={this.props} closeMenuHandler={this.onEditHandler}/>
+            <MenuItem onClick={() => this.onDeleteHandler(this.props.displayMe)}>Delete This Character</MenuItem>
+          </Menu> 
           <CardMedia
             className={classes.media}
             image={classImage}
@@ -125,6 +145,7 @@ class ComplexCard extends React.Component {
           <CardContent>
             <Typography component="p">
             {genElements(18, this.props.perkProgress)}
+            <DoneAll/>
             </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>

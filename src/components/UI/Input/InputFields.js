@@ -55,12 +55,14 @@ class InputFields extends React.Component {
                     type="text"
                     name={this.props.name}
                     value={this.props.value}
-                    onChange={this.props.onchange}
+                    onChange={this.props.onChange}
+                    onBlur={this.props.onBlur}
                 />
         case ("required"):
         return <TextField
                 required
                 id={this.props.setid}
+                name={this.props.name}
                 placeholder={this.props.placeholder}
                 className={classes.textField}
                 margin="normal"
@@ -69,6 +71,7 @@ class InputFields extends React.Component {
         return <TextField
                 id={this.props.setid}
                 label={this.props.label}
+                name={this.props.name}
                 className={classes.textField}
                 type="password"
                 autoComplete="current-password"
@@ -79,24 +82,27 @@ class InputFields extends React.Component {
                     id={this.props.setid}
                     label={this.props.label}
                     value={this.props.value}
-                    onChange={this.props.onchange}
+                    name={this.props.name}
+                    onChange={this.props.onChange}
                     type="number"
                     InputLabelProps={{
                       shrink: true,
                     }}
                     className={classes.textField}
-                    onBlur={this.props.onblur ? this.props.onblur : null}
+                    onBlur={this.props.onBlur ? this.props.onBlur : null}
                   />
       case ("number-restriction"):
       return <TextField
                     id={this.props.setid}
                     label={this.props.label}
                     value={this.props.value}
-                    onChange={this.props.onchange}
+                    onChange={this.props.onChange}
+                    name={this.props.name}
+                    onBlur={this.props.onBlur}
                     type="number"
                     InputProps={
                       {inputProps: {
-                        min: this.props.min, max: this.props.max
+                        min: this.props.min, max: this.props.max, id: this.props.setid
                       }}
                     }
                     className={classes.textField}
@@ -107,7 +113,7 @@ class InputFields extends React.Component {
                   select
                   className={classes.textField}
                   value={this.props.value}
-                  onChange={this.props.onchange}
+                  onChange={this.props.onChange}
                   SelectProps={{
                     MenuProps: {
                       className: classes.menu,

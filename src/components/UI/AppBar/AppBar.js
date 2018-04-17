@@ -28,11 +28,6 @@ class MenuAppBar extends React.Component {
     anchorEl: null,
   };
 
-
-  handleChange = (event, checked) => {
-    this.setState({ auth: checked });
-  };
-
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -54,7 +49,7 @@ class MenuAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
-              Title
+              Gloomhaven Collection
             </Typography>
             { this.props.user.authenticated ? (
               <div>

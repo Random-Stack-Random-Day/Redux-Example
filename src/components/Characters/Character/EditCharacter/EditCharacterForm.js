@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {addCharacter} from "../../../redux/actions";
+import {addCharacter} from "../../../../redux/actions";
 import {Formik} from 'formik';
-import InputFields from '../../UI/Input/InputFields';
+import InputFields from '../../../UI/Input/InputFields';
+import CharacterBuilder from '../CharacterBuilder';
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -10,7 +11,7 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-class NewCharacterForm extends Component {
+class EditCharacterForm extends Component {
     constructor() {
         super();
         this.state = {
@@ -23,10 +24,44 @@ class NewCharacterForm extends Component {
             checkmarks: 0,
             description: ""
         };
+    // this.handleChange = this
+    //     .handleChange
+    //     .bind(this);
+    // this.handleSubmit = this
+    //     .handleSubmit
+    //     .bind(this);
+    // }
+}
 
+
+componentDidMount() {
+    this.setState({
+        name: this.props.character.name
+    })
+};
+    
+  handleChange(event) {
+    // (event.target.id === 'experience' ? console.log("Hi") : null);
+    if (event.target.value !== '' || event.target.value > 0) {
+      this.setState({
+        [event.target.id]: event.target.type === 'number'
+          ? parseInt(event.target.value, 10)
+          : event.target.value
+      });
     }
+  }
+
+  handleBlur = (event) => {
+    if (event.target.id === 'experience') {
+      // console.log(CharacterBuilder.getLevelFromExp(event.target.value))
+      this.setState({
+        level: CharacterBuilder.getLevelFromExp(event.target.value)
+      })
+    }
+  }
+
     render() {
-        
+  
         const {
             name,
             charClass,
@@ -38,7 +73,7 @@ class NewCharacterForm extends Component {
         } = this.state;
         return (
             <div>
-                <h1>New Character</h1>
+                <h1>Editing {name}</h1>
                 <Formik
                     initialValues={{
                     name: "",
@@ -114,5 +149,5 @@ class NewCharacterForm extends Component {
 
     }
 }
-const NewCharForm = connect(null, mapDispatchToProps)(NewCharacterForm)
-export default NewCharForm;
+const EditCharForm = connect(null, mapDispatchToProps)(EditCharacterForm)
+export default EditCharForm;
