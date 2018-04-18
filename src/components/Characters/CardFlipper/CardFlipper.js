@@ -29,7 +29,7 @@ import FlipCard from '@kennethormandy/react-flipcard'
 
 // Import minimal required styles however you’d like
 import '@kennethormandy/react-flipcard/dist/Flipcard.css'
-import EditCharForm from '../Character/EditCharacter/EditCharacterForm';
+import EditCharForm from '../Character/EditCharacter/NEW_CharacterEditForm';
 // import './NEW_CharCard.css';
 
 const styles = theme => ({
@@ -96,23 +96,31 @@ class CardFlipper extends Component {
         this.setState({ anchorEl: null });
         // console.log(character)
       }
+
+      onFlipHandler = () => {
+        this.setState({ flipped: !this.state.flipped })
+      }
     
       render() {
         const { anchorEl } = this.state;
         const { classes } = this.props;
         const open = Boolean(anchorEl);
         const separateEvery = (sep, n, xs) => R.unnest(R.intersperse([sep], R.splitEvery(n, xs)))
-    
-        const genElements = (totalSize, progress) => separateEvery(<DoneAll />, 3, 
+
+        const genElements = (totalSize, progress) => separateEvery(<DoneAll key={uid()}/>, 3, 
                             R.concat(
                               R.range(0, progress).map(() => <CheckCircle key={uid()} /> ), 
                               R.range(progress, 18).map(() => <CheckBoxOutline key={uid()} />)
                             )
-                  )       
+                  ) 
+        const genElementsWithKey = R.pipe(
+          genElements,
+          R.addIndex(R.map)((el, key) => React.cloneElement(el, {key}))
+        ) 
         return (
           <Fragment>
-            <FlipCard flipped={this.state.flipped} onDoubleClick={e => this.setState({ flipped: !this.state.flipped })}>
-            <Card>
+            <FlipCard flipped={this.state.flipped} >
+            <Card onDoubleClick={() => this.onFlipHandler()}>
                   <CardHeader
                       avatar={
                       <Avatar aria-label="Recipe" className={classes.avatar}>
@@ -149,7 +157,7 @@ class CardFlipper extends Component {
                   />
                   <CardContent>
                       <Typography component="p">
-                      {genElements(18, this.props.character.checkmarks)}
+                      {genElementsWithKey(18, this.props.character.checkmarks)}
                       <DoneAll/>
                       </Typography>
                   </CardContent>
@@ -177,7 +185,7 @@ class CardFlipper extends Component {
                       </CardContent>
                   </Collapse>
                   </Card>
-            <EditCharForm character={this.props.character} />
+            <EditCharForm character={this.props.character} onFlipHandler={() => this.onFlipHandler()}/>
             </FlipCard>
             
             </Fragment>

@@ -99,12 +99,16 @@ class ComplexCard extends React.Component {
     const open = Boolean(anchorEl);
     const separateEvery = (sep, n, xs) => R.unnest(R.intersperse([sep], R.splitEvery(n, xs)))
 
-    const genElements = (totalSize, progress) => separateEvery(<DoneAll />, 3, 
+    const genElements = (totalSize, progress) => separateEvery(<DoneAll key={uid()}/>, 3, 
                         R.concat(
                           R.range(0, progress).map(() => <CheckCircle key={uid()} /> ), 
                           R.range(progress, 18).map(() => <CheckBoxOutline key={uid()} />)
                         )
-              )               
+              ) 
+    const genElementsWithKey = R.pipe(
+      genElements,
+      R.addIndex(R.map)((el, key) => React.cloneElement(el, {key}))
+    )
     return (
       
       <div>
@@ -145,7 +149,7 @@ class ComplexCard extends React.Component {
           />
           <CardContent>
             <Typography component="p">
-            {genElements(18, this.props.character.checkmarks)}
+            {genElementsWithKey(18, this.props.character.checkmarks)}
             <DoneAll/>
             </Typography>
           </CardContent>
