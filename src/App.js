@@ -37,6 +37,7 @@ class App extends Component {
       else {
         console.log("Not logged in")
         this.setState({ loading: false })
+        this.props.getCharacters();
       }
     });
   }
@@ -47,12 +48,13 @@ class App extends Component {
     }
 
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <AuthRoute path="/" component={Homepage} />
-        </Switch>
-      </BrowserRouter>
+      // <BrowserRouter>
+      //   <Switch>
+      //     <Route exact path="/login" component={Login} />
+      //     <AuthRoute path="/" component={Homepage} />
+      //   </Switch>
+      // </BrowserRouter>
+      <Homepage />
     );
   }
 }

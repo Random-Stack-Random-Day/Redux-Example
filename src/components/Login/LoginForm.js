@@ -38,7 +38,7 @@ class LoginForm extends Component {
                 <form style={this.props.style} className="register-form" onSubmit={handleSubmit}>
                     <InputFields
                         label="Email"
-                        type="email"
+                        type="name"
                         name="email"
                         placeholder="you@yourmail.com"
                         onChange={handleChange}
