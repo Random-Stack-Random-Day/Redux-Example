@@ -3,11 +3,14 @@ import InputFields from '../../../UI/Input/InputFields';
 import {compose} from 'redux';
 import {connect} from "react-redux";
 import {logACharacterPlaySession} from "../../../../redux/actions";
-import {FormControl} from 'material-ui/Form';
+import {FormControl, FormHelperText} from 'material-ui/Form';
 import {withFormik} from 'formik';
+import {withStyles} from 'material-ui/styles';
+
 import Yup from 'yup';
 import uuid from 'uuid/v4';
 import CharacterBuilder from '../CharacterBuilder'
+import {InputLabel} from 'material-ui';
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -15,7 +18,17 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-const container = compose(connect(null, mapDispatchToProps), withFormik({
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        alignContent: 'flex-start'
+    },
+    formControl: {
+        margin: theme.spacing.unit
+    }
+});
+
+const container = compose(connect(null, mapDispatchToProps), withStyles(styles), withFormik({
     mapPropsToValues: props => ({
         name: props.character.name,
         experience: props.character.experience,
@@ -24,7 +37,8 @@ const container = compose(connect(null, mapDispatchToProps), withFormik({
         gold: props.character.gold,
         perks: props.character.perks,
         checkmarks: props.character.checkmarks,
-        characterId: props.charId
+        characterId: props.charId,
+        tempChecks: 0
     }),
     validationSchema: Yup
         .object()
@@ -40,29 +54,26 @@ const container = compose(connect(null, mapDispatchToProps), withFormik({
             gold: Yup
                 .number()
                 .required(`You're broke, sure, but 0 is still a number`)
-                .min(0, `You're broke, sure, but 0 is still a number`)
+                .min(0, `You're broke, sure, but 0 is still a number`),
+            tempChecks: Yup
+                .number()
+                .max(2, "You did NOT just get 3 checkmarks...!")
         }),
 
-    handleSubmit: (values, {props, setSubmitting, setErrors}) => {
+    handleSubmit: (values, {props, setSubmitting, setErrors, resetForm}) => {
         values.level = CharacterBuilder.getLevelFromExp(values.experience);
+        values.checkmarks = CharacterBuilder.checkPerkStatus(props.character.checkmarks, values.tempChecks)
         props.onFlipHandler();
-        props.logACharacterPlaySession(values);
-        console.log(values)
-        // props.onFlipHandler;
-        // props
-        //     .addCharacter({
-        //         values
-        //     });
+        props.logACharacterPlaySession(values)
+        setTimeout(() => {resetForm()}, 500);
     }
 }));
 
-class CharacterEditForm extends Component {
-
-    // componentDidMount() {
-    //     console.log(this.props.character)
-    // }
+class LogSessionForm extends Component {
+    // componentDidMount() {     console.log(this.props.character) }
 
     render() {
+        const {classes} = this.props;
         const {
             values,
             errors,
@@ -72,36 +83,21 @@ class CharacterEditForm extends Component {
             handleSubmit,
             isSubmitting
         } = this.props;
-
         return (
-            <div>
+            <div className={classes.container}>
                 <form onSubmit={handleSubmit}>
+                    <h2>Editing: {values.name} 
+                        the {values.charClass}</h2>
+                    <br/>
                     <InputFields
-                        label="Some Kewl Name"
-                        fieldtype="name"
-                        name="name"
-                        value={values.name}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={touched.name && errors.name}/> {errors.name && touched.name && <div className="input-feedback">{errors.name}</div>}
-                    <InputFields
-                        label="Experience"
                         fieldtype="number"
+                        label="Experience"
                         name="experience"
+                        setid="charExperience"
                         value={values.experience}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={touched.experience && errors.experience}/>
-                    <FormControl disabled>
-                        <InputFields
-                            label="Chararcter Class"
-                            fieldtype="disabled"
-                            name="charClass"
-                            value={values.charClass}
-                            setid={"charClass-disabled"}
-                            onChange={handleChange}
-                            onBlur={handleBlur}/>
-                    </FormControl>
                     <InputFields
                         label="Gold"
                         fieldtype="number"
@@ -109,8 +105,16 @@ class CharacterEditForm extends Component {
                         value={values.gold}
                         onChange={handleChange}
                         onBlur={handleBlur}/> {errors.gold && touched.gold && <div className="input-feedback">{errors.gold}</div>}
-                    <button type="submit">Submit</button>
+                    <InputFields
+                        label="Perk Progress"
+                        fieldtype="number"
+                        name={"tempChecks"}
+                        value={values.tempChecks}
+                        onChange={handleChange}
+                        onBlur={handleBlur}/> {errors.tempChecks && touched.tempChecks && <div className="input-feedback">{errors.tempChecks}</div>}
+                    <br/>
                     <button type="button" onClick={() => this.props.onFlipHandler()}>Cancel</button>
+                    <button type="submit">Submit</button>
                 </form>
             </div>
         );
@@ -118,5 +122,5 @@ class CharacterEditForm extends Component {
 
 };
 
-const EnhancedCharacterForm = container(CharacterEditForm)
-export default EnhancedCharacterForm;
+const EnhancedLogSessionForm = container(LogSessionForm)
+export default EnhancedLogSessionForm;

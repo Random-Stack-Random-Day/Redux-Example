@@ -26,3 +26,8 @@ export const deleteCharacter = character => async dispatch => {
     await CharacterService.deleteCharacter(character);
     dispatch({ type: "DELETE_CHARACTER", character: character})
 }
+
+export const logACharacterPlaySession = character => async dispatch => {
+    await CharacterService.logACharacterPlaySession(character);
+    dispatch({ type: "LOG_A_SESSION", character: character})
+}

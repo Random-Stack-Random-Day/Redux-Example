@@ -139,7 +139,7 @@ class ComplexCard extends React.Component {
             onClose={this.handleClose}
           >
             <MenuItem>Log Game </MenuItem>
-            <EditCharacterModal character={this.props.character} closeMenuHandler={this.onEditHandler}/>
+            <EditCharacterModal character={this.props.character} charId={this.props.displayMe} closeMenuHandler={this.onEditHandler}/>
             <MenuItem onClick={() => this.onDeleteHandler(this.props.displayMe)}>Delete This Character</MenuItem>
           </Menu> 
           <CardMedia

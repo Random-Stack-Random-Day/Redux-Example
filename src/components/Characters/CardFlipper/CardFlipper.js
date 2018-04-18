@@ -30,6 +30,7 @@ import FlipCard from '@kennethormandy/react-flipcard'
 // Import minimal required styles however you’d like
 import '@kennethormandy/react-flipcard/dist/Flipcard.css'
 import EditCharForm from '../Character/EditCharacter/NEW_CharacterEditForm';
+import EnhancedLogSessionForm from '../Character/EditCharacter/LogSession';
 // import './NEW_CharCard.css';
 
 const styles = theme => ({
@@ -147,7 +148,7 @@ class CardFlipper extends Component {
                       onClose={this.handleClose}
                   >
                       <MenuItem>Log Game </MenuItem>
-                      <EditCharacterModal character={this.props.character} closeMenuHandler={this.onEditHandler}/>
+                      <EditCharacterModal charId={this.props.charId} character={this.props.character} closeMenuHandler={this.onEditHandler}/>
                       <MenuItem onClick={() => this.onDeleteHandler(this.props.displayMe)}>Delete This Character</MenuItem>
                   </Menu> 
                   <CardMedia
@@ -185,7 +186,7 @@ class CardFlipper extends Component {
                       </CardContent>
                   </Collapse>
                   </Card>
-            <EditCharForm character={this.props.character} onFlipHandler={() => this.onFlipHandler()}/>
+              <EnhancedLogSessionForm character={this.props.character} charId={this.props.charId} onFlipHandler={() => this.onFlipHandler()}/>
             </FlipCard>
             
             </Fragment>

@@ -32,6 +32,27 @@ export class CharacterService {
             description: character.description
         })
     }
+
+    // PATCH A Character
+    static async logACharacterPlaySession(character) {
+        var charData ={
+            name: character.name,
+            charClass: character.charClass,
+            experience: character.experience,
+            level: character.level,
+            gold: character.gold,
+            perks: character.perks,
+            checkmarks: character.checkmarks,
+            characterId: character.characterId
+        }
+
+        var updates = {};
+
+        updates['campaigns/Player1/characters/'+ character.characterId] = charData
+        console.log(updates)
+        return firebase.database().ref().update(updates);
+
+    }
     // DELETE A Characer
     static deleteCharacter(characterKey) { 
         const characterRef = firebase.database().ref('campaigns/Player1/characters');

@@ -41,7 +41,7 @@ class EditCharacterModal extends React.Component {
         {show ? (
             <Portal container={this.container}>
               {/* <EditCharacterForm character={this.props.character}/> */}
-              <NEWEditCharForm character={this.props.character}/>
+              <NEWEditCharForm charId={this.props.charId} character={this.props.character}/>
             </Portal>
           ) : null}
         <div

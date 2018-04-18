@@ -22,4 +22,19 @@ export default class CharacterBuilder {
                 return 0
         }
     }
+
+    static checkPerkStatus = (perkProgress, newModifer) => {
+        if (newModifer > 0) {
+            perkProgress += newModifer;
+        } else if (newModifer < 0) {
+            for (let i = Math.abs(newModifer); i > 0; i--) {
+              if (perkProgress % 3 === 0) {
+                return perkProgress
+              } else {
+                perkProgress--
+              }
+            }
+        }
+        return perkProgress > 18 ? 18 : perkProgress
+    }
 }

@@ -68,7 +68,7 @@ class ComplexCard extends React.Component {
     return (
       
       <div>
-            <Flipper character={this.props.character} />
+            <Flipper character={this.props.character} charId={this.props.displayMe}/>
       </div>
     );
   }
