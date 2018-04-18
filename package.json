@@ -2,12 +2,14 @@
   "name": "gloomhaven",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://dnorthrupva.github.io/Gloomhaven-App/"
   "dependencies": {
     "@kennethormandy/react-flipcard": "^0.4.0",
     "@material-ui/icons": "^1.0.0-beta.42",
     "axios": "^0.18.0",
     "firebase": "^4.12.1",
     "formik": "^0.11.11",
+    "gh-pages": "^1.1.0",
     "material-ui": "^1.0.0-beta.41",
     "material-ui-icons": "^1.0.0-beta.36",
     "ramda": "^0.25.0",
@@ -26,6 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "predeploy":"npm run builder",
+    "deploy":"gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
