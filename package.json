@@ -2,7 +2,7 @@
   "name": "gloomhaven",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://dnorthrupva.github.io/Gloomhaven-App/"
+  "homepage": "https://dnorthrupva.github.io/Gloomhaven-App/",
   "dependencies": {
     "@kennethormandy/react-flipcard": "^0.4.0",
     "@material-ui/icons": "^1.0.0-beta.42",
