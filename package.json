@@ -29,7 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "predeploy": "npm run build",
-    "deploy": "mv build/* ./* && rmdir build",
+    "deploy": "gh-pages -b master -d build",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

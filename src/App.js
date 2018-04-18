@@ -27,19 +27,19 @@ class App extends Component {
 
   
   async componentDidMount() {
-
-    await firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log("Logged in", user)
-        this.setState({ user, loading: false });
-        this.props.getCharacters();
-      }
-      else {
-        console.log("Not logged in")
-        this.setState({ loading: false })
-        this.props.getCharacters();
-      }
-    });
+    this.props.getCharacters();
+    // await firebase.auth().onAuthStateChanged(user => {
+    //   if (user) {
+    //     console.log("Logged in", user)
+    //     this.setState({ user, loading: false });
+    //     this.props.getCharacters();
+    //   }
+    //   else {
+    //     console.log("Not logged in")
+    //     this.setState({ loading: false })
+    //     this.props.getCharacters();
+    //   }
+    // });
   }
 
   render() {
