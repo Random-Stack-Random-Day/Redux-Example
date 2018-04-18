@@ -11,10 +11,6 @@ import { withFormik } from 'formik';
 
 class LoginForm extends Component {
 
-    componentWillMount() {
-        console.log(this.props);
-    }
-
     render() {
 
         if (this.props.authenticated) {
@@ -38,19 +34,21 @@ class LoginForm extends Component {
                 <form style={this.props.style} className="register-form" onSubmit={handleSubmit}>
                     <InputFields
                         label="Email"
-                        type="name"
+                        fieldtype="name"
                         name="email"
+                        setid={"email"}
                         placeholder="you@yourmail.com"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.email}
                         error={touched.email && errors.email}
-                    />
+                    />{errors.email && touched.email && <div className="input-feedback">{errors.email}</div>}
 
                     <InputFields
                         label="Password"
-                        type="password"
+                        fieldtype="password"
                         name="password"
+                        setid={"password"}
                         placeholder="password"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -90,6 +88,7 @@ export default withFormik({
 
     handleSubmit: async (values, { props, setSubmitting, setErrors, resetForm }) => {
         try {
+            console.log("Clicked", values);
             await firebase.auth().signInWithEmailAndPassword(values.email, values.password);
             props.history.push('/');
         }

@@ -27,19 +27,18 @@ class App extends Component {
 
   
   async componentDidMount() {
-    this.props.getCharacters();
-    // await firebase.auth().onAuthStateChanged(user => {
-    //   if (user) {
-    //     console.log("Logged in", user)
-    //     this.setState({ user, loading: false });
-    //     this.props.getCharacters();
-    //   }
-    //   else {
-    //     console.log("Not logged in")
-    //     this.setState({ loading: false })
-    //     this.props.getCharacters();
-    //   }
-    // });
+
+    await firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log("Logged in", user)
+        this.setState({ user, loading: false });
+        this.props.getCharacters();
+      }
+      else {
+        console.log("Not logged in")
+        this.setState({ loading: false })
+      }
+    });
   }
 
   render() {
@@ -48,13 +47,12 @@ class App extends Component {
     }
 
     return (
-      // <BrowserRouter>
-      //   <Switch>
-      //     <Route exact path="/login" component={Login} />
-      //     <AuthRoute path="/" component={Homepage} />
-      //   </Switch>
-      // </BrowserRouter>
-      <Homepage />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <AuthRoute path="/" component={Homepage} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }

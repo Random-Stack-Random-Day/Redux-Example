@@ -74,6 +74,7 @@ class InputFields extends React.Component {
                 label={this.props.label}
                 name={this.props.name}
                 className={classes.textField}
+                value={this.props.value}
                 type="password"
                 autoComplete="current-password"
                 margin="normal"

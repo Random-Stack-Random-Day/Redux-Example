@@ -14,10 +14,6 @@ export class CharacterService {
                      console.log(err);
                 })            
     }
-    // // GET A Character
-    // static async getCharacterById(id) {
-    //     const characterRef = firebase.database().ref('campaigns/Player1/characters')
-    // }
     // POST A Character
     static async addCharacter(character) { 
         const charRef = firebase.database().ref('campaigns/Player1/characters/')
