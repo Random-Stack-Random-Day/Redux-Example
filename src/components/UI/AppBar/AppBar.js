@@ -63,7 +63,7 @@ class MenuAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
-              Gloomhaven Collection
+              <Link to="/test">Gloomhaven Collection</Link>
             </Typography>
             { this.props.user.authenticated ? (
               <div>
@@ -75,6 +75,7 @@ class MenuAppBar extends React.Component {
                 >
                   <AccountCircle />
                 </IconButton>
+                <Link to="/characters">Characters</Link>
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
