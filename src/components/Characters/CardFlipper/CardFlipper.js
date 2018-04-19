@@ -18,7 +18,7 @@ import CheckBoxOutline from '@material-ui/icons/CheckBoxOutlineBlank';
 import DoneAll from '@material-ui/icons/DoneAll';
 import * as R from 'ramda';
 import * as uid from 'uuid/v4';
-
+import { Link } from 'react-router-dom';
 
 import classImage from '../../../assets/images/mindthief.jpg';
 import { deleteCharacter } from '../../../redux/actions';
@@ -182,7 +182,6 @@ class CardFlipper extends Component {
                   </CardActions>
                   <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                       <CardContent>
-                          Some stuff
                       </CardContent>
                   </Collapse>
                   </Card>

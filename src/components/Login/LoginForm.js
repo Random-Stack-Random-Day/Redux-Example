@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
+import { FormControl } from 'material-ui/Form';
 import { Redirect } from 'react-router-dom';
 import InputFields from '../UI/Input/InputFields';
 import Button from '../UI/Button/RaisedButton';
@@ -7,15 +9,53 @@ import firebase from 'firebase';
 import ErrorLabel from '../UI/Errors/ErrorLabel';
 import Loading from '../UI/Loading/Loading';
 import { withFormik } from 'formik';
-
+import { InputLabel } from 'material-ui/Input'
+import { withRouter } from "react-router-dom";
+const container = (
+    withRouter,
+    withFormik({
+        mapPropsToValues: props => ({
+            email: props.email,
+            password: props.password
+        }),
+    
+        validate: (values, props) => {
+            const errors = {};
+            
+            if (!values.email) {
+                errors.email = "Required";
+            }
+            else if (!Util.isValidEmail(values.email)) {
+                errors.email = "Invalid email address";
+            }
+    
+            return errors;
+        },
+    
+        handleSubmit: (values, { props, setSubmitting, setErrors, resetForm }) => {
+            try {
+                console.log("Clicked", values);
+                firebase.auth().signInWithEmailAndPassword(values.email, values.password);
+                props.history.push('/')
+            }
+            catch (e) {
+                setSubmitting(false);
+                setErrors({ login: 'Information does not match' });
+            }
+        }
+    })
+);
 
 class LoginForm extends Component {
 
-    render() {
+componentDidMount() {
+    console.log(this.props.history)
+}
 
-        if (this.props.authenticated) {
-            return <Redirect to="/"/>;
-        }
+
+    render() {
+        const { classes } = this.props;
+
         const {
             values,
             errors,
@@ -43,18 +83,19 @@ class LoginForm extends Component {
                         value={values.email}
                         error={touched.email && errors.email}
                     />{errors.email && touched.email && <div className="input-feedback">{errors.email}</div>}
-
-                    <InputFields
-                        label="Password"
-                        fieldtype="password"
-                        name="password"
-                        setid={"password"}
-                        placeholder="password"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.password}
-                    />
-
+                    <FormControl >
+                        <InputLabel htmlFor="password">Password</InputLabel>
+                        <InputFields
+                            fieldtype="password"
+                            name="password"
+                            setid={"password"}
+                            placeholder="password"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password}
+                            error={touched.password && errors.password}
+                            />{errors.password && touched.password && <div className="input-feedback">{errors.password}</div>}
+                    </FormControl>
                     <Button
                         className="auth-button"
                         type="submit"
@@ -67,34 +108,5 @@ class LoginForm extends Component {
     }
 }
 
-export default withFormik({
-    mapPropsToValues: props => ({
-        email: props.email,
-        password: props.password
-    }),
-
-    validate: (values, props) => {
-        const errors = {};
-        
-        if (!values.email) {
-            errors.email = "Required";
-        }
-        else if (!Util.isValidEmail(values.email)) {
-            errors.email = "Invalid email address";
-        }
-
-        return errors;
-    },
-
-    handleSubmit: async (values, { props, setSubmitting, setErrors, resetForm }) => {
-        try {
-            console.log("Clicked", values);
-            await firebase.auth().signInWithEmailAndPassword(values.email, values.password);
-            props.history.push('/');
-        }
-        catch (e) {
-            setSubmitting(false);
-            setErrors({ login: 'Information does not match' });
-        }
-    }
-})(LoginForm);
+const EnhancedLoginForm = container(LoginForm);
+export default EnhancedLoginForm;

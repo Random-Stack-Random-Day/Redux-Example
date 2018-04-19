@@ -60,6 +60,11 @@ class ComplexCard extends React.Component {
     flipped: false 
   }
  
+  componentDidMount() {
+    console.log(this.props.history);
+  }
+  
+
   flip = () => {
     this.setState({ flipped: !this.state.flipped})
     console.log("Flipped");

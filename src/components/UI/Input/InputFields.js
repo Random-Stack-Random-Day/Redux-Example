@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
-import Input from 'material-ui/Input';
+import IconButton from 'material-ui/IconButton';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import MenuItem from 'material-ui/Menu/MenuItem';
+import Visibility from 'material-ui-icons/Visibility';
+import VisibilityOff from 'material-ui-icons/VisibilityOff';
 
 
 const styles = theme => ({
@@ -25,12 +28,22 @@ const styles = theme => ({
 
 class InputFields extends React.Component {
   state = {
+    password: '',
+    showPassword: false
   };
 
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
+  };
+
+  handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
+
+  handleClickShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
   };
 
   render() {
@@ -69,16 +82,24 @@ class InputFields extends React.Component {
                 margin="normal"
             />
         case ("password"):
-        return <TextField
-                id={this.props.setid}
-                label={this.props.label}
-                name={this.props.name}
-                className={classes.textField}
+      return  <Input
+                id="password"
+                label="Passowrd"
+                type={this.state.showPassword ? 'text' : 'password'}
                 value={this.props.value}
-                type="password"
-                autoComplete="current-password"
-                margin="normal"
-            />  
+                onChange={this.props.onChange}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="Toggle password visibility"
+                      onClick={this.handleClickShowPassword}
+                      onMouseDown={this.handleMouseDownPassword}
+                    >
+                      {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
       case ("number"):
       return <TextField
                     id={this.props.setid}
