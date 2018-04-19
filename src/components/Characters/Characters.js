@@ -5,9 +5,7 @@ import Grid from 'material-ui/Grid';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import CharacterCards from './CharacterCards';
 import CreateCharacterModal from './Character/CreateCharacter/CreateCharacterModal';
-import NewModal from './Character/EditCharacter/NEW_CreateCharacterModal';
 import NEWCard from './NEW_CharacterCards'
 
 const styles = theme => ({

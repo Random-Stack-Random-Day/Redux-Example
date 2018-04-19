@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { connect } from "react-redux";
 import firebase from 'firebase';
 import Loading from './components/UI/Loading/Loading';
-import AuthRoute from './HOC/AuthRoute';
 import Login from './components/Login/Login';
 import Homepage from './components/Homepage/Homepage';
 import { getCharacters } from './redux/actions/index';
@@ -50,7 +49,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/login" component={Login} />
-          <AuthRoute path="/" component={Homepage} />
+          <Route path="/" component={Homepage} />
         </Switch>
       </BrowserRouter>
     );

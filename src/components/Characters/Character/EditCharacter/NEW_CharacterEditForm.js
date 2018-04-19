@@ -6,7 +6,6 @@ import {logACharacterPlaySession} from "../../../../redux/actions";
 import {FormControl} from 'material-ui/Form';
 import {withFormik} from 'formik';
 import Yup from 'yup';
-import uuid from 'uuid/v4';
 import CharacterBuilder from '../CharacterBuilder'
 
 const mapDispatchToProps = dispatch => {
@@ -69,8 +68,7 @@ class CharacterEditForm extends Component {
             touched,
             handleChange,
             handleBlur,
-            handleSubmit,
-            isSubmitting
+            handleSubmit
         } = this.props;
 
         return (

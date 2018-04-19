@@ -3,14 +3,11 @@ import InputFields from '../../../UI/Input/InputFields';
 import {compose} from 'redux';
 import {connect} from "react-redux";
 import {logACharacterPlaySession} from "../../../../redux/actions";
-import {FormControl, FormHelperText} from 'material-ui/Form';
 import {withFormik} from 'formik';
 import {withStyles} from 'material-ui/styles';
 
 import Yup from 'yup';
-import uuid from 'uuid/v4';
 import CharacterBuilder from '../CharacterBuilder'
-import {InputLabel} from 'material-ui';
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -80,8 +77,7 @@ class LogSessionForm extends Component {
             touched,
             handleChange,
             handleBlur,
-            handleSubmit,
-            isSubmitting
+            handleSubmit
         } = this.props;
         return (
             <div className={classes.container}>

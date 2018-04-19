@@ -1,11 +1,19 @@
 import React from 'react';
 import AppBar from '../UI/AppBar/AppBar';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Characters from '../Characters/Characters';
 
 const divStyle = {
     maxWidth: '100%'
 };
+const mapStateToProps = state => {
+    return { user: state.user, characters: state.characters };
+}
+const container = (
+    withRouter,
+    connect(mapStateToProps)
+)
 
 const Layout = (props) => {
     return (
@@ -15,7 +23,5 @@ const Layout = (props) => {
         </div>
     );
 };
-const mapStateToProps = state => {
-    return { user: state.user, characters: state.characters };
-}
-export default connect(mapStateToProps)(Layout);
+const EnhancedLayout = container(Layout);
+export default EnhancedLayout

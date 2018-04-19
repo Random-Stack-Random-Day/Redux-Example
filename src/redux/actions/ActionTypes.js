@@ -4,5 +4,6 @@ export const ActionTypes = Object.freeze({
     ADD_CHARACTER:      'ADD_CHARACTER',
     DELETE_CHARACTER:   'DELETE_CHARACTER',
     FETCH_CHARACTERS:   'FETCH_CHARACTERS',
+    CLEAR_CHARACTERS:   'CLEAR_CHARACTERS',
     LOG_A_SESSION:      'LOG_A_SESSION'    
 });

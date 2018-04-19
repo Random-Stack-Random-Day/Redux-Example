@@ -31,3 +31,4 @@ export const logACharacterPlaySession = character => async dispatch => {
     await CharacterService.logACharacterPlaySession(character);
     dispatch({ type: "LOG_A_SESSION", character: character})
 }
+

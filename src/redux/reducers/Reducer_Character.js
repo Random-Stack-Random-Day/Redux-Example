@@ -22,6 +22,9 @@ export default function(state = INITIAL_STATE, action) {
             console.log("SESSION LOGGED");
             console.log(action.character, "Character")
             return { ...state, [action.character.characterId]: action.character}
+        case ActionTypes.SIGN_OUT:
+            console.log("CLEARING CHARACTERS");
+            return INITIAL_STATE;
         default:
             return state;
     }

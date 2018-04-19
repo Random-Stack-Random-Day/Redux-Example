@@ -18,7 +18,6 @@ import CheckBoxOutline from '@material-ui/icons/CheckBoxOutlineBlank';
 import DoneAll from '@material-ui/icons/DoneAll';
 import * as R from 'ramda';
 import * as uid from 'uuid/v4';
-import { Link } from 'react-router-dom';
 
 import classImage from '../../../assets/images/mindthief.jpg';
 import { deleteCharacter } from '../../../redux/actions';
@@ -29,7 +28,7 @@ import FlipCard from '@kennethormandy/react-flipcard'
 
 // Import minimal required styles however you’d like
 import '@kennethormandy/react-flipcard/dist/Flipcard.css'
-import EditCharForm from '../Character/EditCharacter/NEW_CharacterEditForm';
+// import EditCharForm from '../Character/EditCharacter/NEW_CharacterEditForm';
 import EnhancedLogSessionForm from '../Character/EditCharacter/LogSession';
 // import './NEW_CharCard.css';
 

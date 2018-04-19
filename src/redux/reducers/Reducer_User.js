@@ -12,7 +12,7 @@ export default function(state = INITIAL_STATE, action) {
             return { authenticated: true, details: action.details };
         case ActionTypes.SIGN_OUT:
             console.log("Reducer signout");
-            return INITIAL_STATE;
+            return INITIAL_STATE
         default:
             return state;
     }

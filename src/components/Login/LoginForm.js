@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import { FormControl } from 'material-ui/Form';
-import { Redirect } from 'react-router-dom';
 import InputFields from '../UI/Input/InputFields';
 import Button from '../UI/Button/RaisedButton';
 import Util from '../../util/Util';
@@ -54,7 +52,6 @@ componentDidMount() {
 
 
     render() {
-        const { classes } = this.props;
 
         const {
             values,

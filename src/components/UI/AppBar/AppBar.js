@@ -9,6 +9,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import firebase from 'firebase';
+import { Link } from 'react-router-dom';
+import Login from '../../Login/Login';
 
 const styles = {
   root: {
@@ -28,6 +30,11 @@ class MenuAppBar extends React.Component {
     anchorEl: null,
   };
 
+  componentDidMount() {
+    console.log(this.props);
+  }
+  
+
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -35,6 +42,13 @@ class MenuAppBar extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
+
+  handleSignOut = () => {
+    firebase.auth().signOut()
+    this.setState({
+      characters: null
+    });
+  }
 
   render() {
     const { classes } = this.props;
@@ -77,10 +91,10 @@ class MenuAppBar extends React.Component {
                 >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                   <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                  <MenuItem onClick={() => firebase.auth().signOut()}>Logout</MenuItem>
+                  <MenuItem onClick={() => this.handleSignOut()}>Logout</MenuItem>
                 </Menu>
               </div>
-            ): <div>Login bro</div>
+            ): <Login />
             }
           </Toolbar>
         </AppBar>
